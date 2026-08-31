@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace CharCounterWPF
+namespace RMALabs.CharCounterWPF
 {
     /// <summary>
     /// Interaction logic for App.xaml
