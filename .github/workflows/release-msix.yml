@@ -23,11 +23,22 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v2
 
-    - name: Decode Signing Certificate
+    - name: Decode and Install Signing Certificate
       shell: pwsh
       run: |
-        $bytes = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
-        [System.IO.File]::WriteAllBytes("$pwd\SigningCert.pfx", $bytes)
+        $pfxBytes = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
+        $pfxPath = "$pwd\SigningCert.pfx"
+        [System.IO.File]::WriteAllBytes($pfxPath, $pfxBytes)
+
+        # Importar con flags Exportable y PersistKeySet
+        $pfxPass = ConvertTo-SecureString "${{ secrets.CERTIFICATE_PASSWORD }}" -AsPlainText -Force
+        $cert = Import-PfxCertificate -FilePath $pfxPath -CertStoreLocation Cert:\CurrentUser\My -Password $pfxPass -Exportable
+        
+        # También agregarlo a Root y TrustedPeople para que sea válido en el runner
+        Import-Certificate -FilePath $pfxPath -CertStoreLocation Cert:\CurrentUser\TrustedPeople
+        
+        Write-Host "Certificate installed with Thumbprint: $($cert.Thumbprint)"
+        echo "CERT_THUMBPRINT=$($cert.Thumbprint)" >> $env:GITHUB_ENV
 
     - name: Restore NuGet Packages
       run: |
@@ -42,8 +53,7 @@ jobs:
           /p:AppxBundle=Never `
           /p:AppxPackageDir="$pwd\AppPackages" `
           /p:AppxPackageOutput="$pwd\AppPackages\CharCounter-1.0.0.msix" `
-          /p:PackageCertificateKeyFile="$pwd\SigningCert.pfx" `
-          /p:PackageCertificatePassword="${{ secrets.CERTIFICATE_PASSWORD }}" `
+          /p:PackageCertificateThumbprint="$env:CERT_THUMBPRINT" `
           /p:AppxPackageSigningEnabled=true `
           /p:AppxPackageVersion=1.0.0.0 `
           /r
