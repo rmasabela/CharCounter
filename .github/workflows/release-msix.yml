@@ -25,19 +25,32 @@ jobs:
 
     - name: Decode and Install Signing Certificate
       shell: pwsh
+      env:
+        PFX_BASE64: ${{ secrets.BASE64_ENCODED_PFX }}
+        PFX_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
       run: |
-        $pfxBytes = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
+        $pfxBytes = [System.Convert]::FromBase64String($env:PFX_BASE64)
         $pfxPath = "$pwd\SigningCert.pfx"
         [System.IO.File]::WriteAllBytes($pfxPath, $pfxBytes)
 
-        # Importar con flags Exportable y PersistKeySet
-        $pfxPass = ConvertTo-SecureString "${{ secrets.CERTIFICATE_PASSWORD }}" -AsPlainText -Force
-        $cert = Import-PfxCertificate -FilePath $pfxPath -CertStoreLocation Cert:\CurrentUser\My -Password $pfxPass -Exportable
+        # Importar a Cert:\CurrentUser\My usando System.Security.Cryptography.X509Certificates
+        $flags = [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::Exportable -bor `
+                 [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::PersistKeySet -bor `
+                 [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::UserKeySet
+
+        $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($pfxPath, $env:PFX_PASSWORD, $flags)
         
-        # También agregarlo a Root y TrustedPeople para que sea válido en el runner
-        Import-Certificate -FilePath $pfxPath -CertStoreLocation Cert:\CurrentUser\TrustedPeople
-        
-        Write-Host "Certificate installed with Thumbprint: $($cert.Thumbprint)"
+        $storeMy = New-Object System.Security.Cryptography.X509Certificates.X509Store([System.Security.Cryptography.X509Certificates.StoreName]::My, [System.Security.Cryptography.X509Certificates.StoreLocation]::CurrentUser)
+        $storeMy.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadWrite)
+        $storeMy.Add($cert)
+        $storeMy.Close()
+
+        $storeTrusted = New-Object System.Security.Cryptography.X509Certificates.X509Store([System.Security.Cryptography.X509Certificates.StoreName]::TrustedPeople, [System.Security.Cryptography.X509Certificates.StoreLocation]::CurrentUser)
+        $storeTrusted.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadWrite)
+        $storeTrusted.Add($cert)
+        $storeTrusted.Close()
+
+        Write-Host "Certificate installed successfully! Thumbprint: $($cert.Thumbprint)"
         echo "CERT_THUMBPRINT=$($cert.Thumbprint)" >> $env:GITHUB_ENV
 
     - name: Restore NuGet Packages
