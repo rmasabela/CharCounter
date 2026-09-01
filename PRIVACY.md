@@ -20,13 +20,6 @@ CharCounter operates entirely offline and does not require an active internet co
 ## 4. Third-Party Services
 CharCounter does not share any data with third-party services or external servers.
 
-## 5. Contact & Que
-
-
-
-
-
-
-stions
+## 5. Contact & Questions
 If you have any questions or feedback regarding this Privacy Policy, feel free to open an issue on GitHub:
 - **Repository Issues:** [https://github.com/rmasabela/CharCounter/issues](https://github.com/rmasabela/CharCounter/issues)
