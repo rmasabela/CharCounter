@@ -56,7 +56,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <NoWarn>$(NoWarn);NU1702</NoWarn>
-    <EntryPointProjectUniqueName>..\CharCounterWPF\CharCounterWPF.csproj</EntryPointProjectUniqueName>
+    <EntryPointProjectUniqueName>..\CharCounter.WPF\CharCounter.WPF.csproj</EntryPointProjectUniqueName>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <PackageCertificateThumbprint>388AFAA320515684A02DD7687850F5855A2E323C</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -158,7 +158,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CharCounterWPF\CharCounterWPF.csproj">
+    <ProjectReference Include="..\CharCounter.WPF\CharCounter.WPF.csproj">
       <TrustLevel>FullTrust</TrustLevel>
     </ProjectReference>
   </ItemGroup>
