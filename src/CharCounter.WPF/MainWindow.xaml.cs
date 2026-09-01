@@ -1,15 +1,19 @@
-﻿using System;
-using System.Buffers;
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using RMALabs.CharCounter.Core.Models;
+using RMALabs.CharCounter.Core.Services;
 
 namespace RMALabs.CharCounterWPF
 {
     public partial class MainWindow : Window
     {
+        private readonly ITextAnalysisService _textAnalysisService;
+
         public MainWindow()
         {
             InitializeComponent();
+            _textAnalysisService = new TextAnalysisService();
         }
 
         private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -30,58 +34,14 @@ namespace RMALabs.CharCounterWPF
                 return;
             }
 
-            ReadOnlySpan<char> span = text.AsSpan();
+            TextMetrics metrics = _textAnalysisService.Analyze(text.AsSpan());
 
-            int totalChars = span.Length;
-            int charsNoSpaces = 0;
-            int words = 0;
-            int lines = 1;
-
-            bool inWord = false;
-
-            for (int i = 0; i < span.Length; i++)
-            {
-                char c = span[i];
-
-                if (!char.IsWhiteSpace(c))
-                {
-                    charsNoSpaces++;
-                }
-
-                if (c == '\n')
-                {
-                    lines++;
-                }
-
-                if (char.IsWhiteSpace(c))
-                {
-                    if (inWord)
-                    {
-                        words++;
-                        inWord = false;
-                    }
-                }
-                else
-                {
-                    inWord = true;
-                }
-            }
-
-            if (inWord)
-            {
-                words++;
-            }
-
-            // Estimate reading time assuming ~200 words per minute
-            double readingMinutes = Math.Ceiling((double)words / 200.0);
-            if (words == 0) readingMinutes = 0;
-
-            LblTotalChars.Text = totalChars.ToString("N0");
-            LblCharsNoSpaces.Text = charsNoSpaces.ToString("N0");
-            LblWords.Text = words.ToString("N0");
-            LblLines.Text = lines.ToString("N0");
-            LblReadingTime.Text = readingMinutes < 1 && words > 0 ? "< 1 min" : $"{readingMinutes} min";
-            LblStatus.Text = $"{totalChars:N0} characters analyzed";
+            LblTotalChars.Text = metrics.TotalChars.ToString("N0");
+            LblCharsNoSpaces.Text = metrics.CharsNoSpaces.ToString("N0");
+            LblWords.Text = metrics.Words.ToString("N0");
+            LblLines.Text = metrics.Lines.ToString("N0");
+            LblReadingTime.Text = metrics.ReadingMinutes < 1 && metrics.Words > 0 ? "< 1 min" : $"{metrics.ReadingMinutes} min";
+            LblStatus.Text = $"{metrics.TotalChars:N0} characters analyzed";
         }
 
         private void BtnClear_Click(object sender, RoutedEventArgs e)
