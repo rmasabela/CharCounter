@@ -34,4 +34,8 @@
     <Resource Include="CharCounter.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CharCounter.Core\CharCounter.Core.csproj" />
+  </ItemGroup>
+
 </Project>
