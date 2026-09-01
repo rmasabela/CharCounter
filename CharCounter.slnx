@@ -10,6 +10,13 @@
   <Folder Name="/.github/workflows/">
     <File Path=".github/workflows/release-msix.yml" />
   </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="LICENSE" />
+    <File Path="PRIVACY.md" />
+    <File Path="README.md" />
+  </Folder>
   <Project Path="CharCounter.Package/CharCounter.Package.wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5" Id="966a0a18-c38f-472c-86f7-9fbbd8de2365">
     <Deploy />
   </Project>
