@@ -1,15 +1,14 @@
 using System.Windows;
-using RMALabs.CharCounter.Core.Services;
 using RMALabs.CharCounter.WPF.ViewModels;
 
 namespace RMALabs.CharCounterWPF
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = new MainViewModel(new TextAnalysisService());
+            DataContext = viewModel;
         }
     }
 }

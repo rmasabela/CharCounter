@@ -3,16 +3,19 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RMALabs.CharCounter.Core.Models;
 using RMALabs.CharCounter.Core.Services;
+using RMALabs.CharCounter.WPF.Services;
 
 namespace RMALabs.CharCounter.WPF.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
         private readonly ITextAnalysisService _textAnalysisService;
+        private readonly IClipboardService _clipboardService;
 
-        public MainViewModel(ITextAnalysisService textAnalysisService)
+        public MainViewModel(ITextAnalysisService textAnalysisService, IClipboardService clipboardService)
         {
             _textAnalysisService = textAnalysisService ?? throw new ArgumentNullException(nameof(textAnalysisService));
+            _clipboardService = clipboardService ?? throw new ArgumentNullException(nameof(clipboardService));
         }
 
         [ObservableProperty]
@@ -66,7 +69,7 @@ namespace RMALabs.CharCounter.WPF.ViewModels
         {
             if (!string.IsNullOrEmpty(InputText))
             {
-                System.Windows.Clipboard.SetText(InputText);
+                _clipboardService.SetText(InputText);
                 StatusText = "Copied to clipboard";
             }
         }
