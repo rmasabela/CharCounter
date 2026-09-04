@@ -53,6 +53,14 @@ jobs:
           --collect:"XPlat Code Coverage"
           --results-directory "TestResults"
 
+          dotnet test src/CharCounter.WPF.Tests/CharCounter.WPF.Tests.csproj `
+            --configuration Release `
+            --no-build `
+            --logger "console;verbosity=normal" `
+            --logger "trx;LogFileName=wpf-tests.trx" `
+            --collect:"XPlat Code Coverage" `
+            --results-directory "TestResults/WPF"
+
       - name: Install ReportGenerator
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
