@@ -45,7 +45,7 @@ jobs:
 
       - name: Run Unit Tests
         run: >
-          dotnet test src/CharCounter.slnx
+          dotnet test src/CharCounter.Core.Tests/CharCounter.Core.Tests.csproj
           --configuration Release
           --no-build
           --logger "console;verbosity=normal"
