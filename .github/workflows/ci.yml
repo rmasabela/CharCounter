@@ -82,5 +82,5 @@ jobs:
         if: always()
         with:
           name: test-results
-          path: '**/TestResults/*.trx'
+          path: 'TestResults/**/*.trx'
           if-no-files-found: warn
