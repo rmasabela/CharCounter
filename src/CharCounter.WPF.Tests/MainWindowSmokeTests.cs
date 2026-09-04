@@ -1,5 +1,5 @@
 using Xunit;
-using RMALabs.CharCounterWPF;
+using RMALabs.CharCounter.WPF;
 using RMALabs.CharCounter.WPF.ViewModels;
 using RMALabs.CharCounter.WPF.Tests.TestDoubles;
 

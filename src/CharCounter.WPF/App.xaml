@@ -1,7 +1,7 @@
-﻿<Application x:Class="RMALabs.CharCounterWPF.App"
+﻿<Application x:Class="RMALabs.CharCounter.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:RMALabs.CharCounterWPF">
+             xmlns:local="clr-namespace:RMALabs.CharCounter.WPF">
     <Application.Resources>
          
     </Application.Resources>

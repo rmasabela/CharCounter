@@ -7,7 +7,7 @@ using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 
-namespace RMALabs.CharCounterWPF
+namespace RMALabs.CharCounter.WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml

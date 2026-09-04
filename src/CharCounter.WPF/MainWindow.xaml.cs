@@ -1,7 +1,7 @@
 using System.Windows;
 using RMALabs.CharCounter.WPF.ViewModels;
 
-namespace RMALabs.CharCounterWPF
+namespace RMALabs.CharCounter.WPF
 {
     public partial class MainWindow : Window
     {
