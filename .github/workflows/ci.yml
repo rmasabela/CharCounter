@@ -52,6 +52,7 @@ jobs:
           --logger "trx;LogFileName=test-results.trx"
           --collect:"XPlat Code Coverage"
           --results-directory "TestResults"
+          -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.CoverageFilter.Include.Assembly="[RMALabs.CharCounter.Core]*"
 
           dotnet test src/CharCounter.WPF.Tests/CharCounter.WPF.Tests.csproj `
             --configuration Release `
@@ -60,6 +61,7 @@ jobs:
             --logger "trx;LogFileName=wpf-tests.trx" `
             --collect:"XPlat Code Coverage" `
             --results-directory "TestResults/WPF"
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.CoverageFilter.Include.Assembly="[RMALabs.CharCounter.WPF]*"
 
       - name: Install ReportGenerator
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
