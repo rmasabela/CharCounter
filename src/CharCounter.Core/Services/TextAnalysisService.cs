@@ -5,6 +5,8 @@ namespace RMALabs.CharCounter.Core.Services
 {
     public class TextAnalysisService : ITextAnalysisService
     {
+        public const int WordsPerMinute = 5;
+
         public TextMetrics Analyze(ReadOnlySpan<char> text)
         {
             if (text.IsEmpty)
@@ -52,7 +54,7 @@ namespace RMALabs.CharCounter.Core.Services
                 words++;
             }
 
-            double readingMinutes = Math.Ceiling((double)words / 200.0);
+            double readingMinutes = Math.Ceiling((double)words / WordsPerMinute);
             if (words == 0)
             {
                 readingMinutes = 0;
