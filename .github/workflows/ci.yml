@@ -37,7 +37,11 @@ jobs:
         run: dotnet restore src/CharCounter.slnx
 
       - name: Build solution with MSBuild
-        run: msbuild src/CharCounter.slnx /p:Configuration=Release /p:Platform=x64
+        run: msbuild src/CharCounter.slnx
+             /p:Configuration=Release
+             /p:Platform=x64
+             /p:AppxPackageSigningEnabled=false
+             /p:AppxBundle=Never
 
       - name: Run Unit Tests
         run: >
