@@ -6,7 +6,9 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6?logo=windows)](https://apps.microsoft.com/detail/9PNSJWHBRVP5)
 [![Microsoft Store](https://img.shields.io/badge/Microsoft%20Store-9PNSJWHBRVP5-008080?logo=microsoft-store)](https://apps.microsoft.com/detail/9PNSJWHBRVP5)
 [![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
-[![Packaging](https://img.shields.io/badge/Packaging-MSIX%20%28x64%29-orange)](https://learn.microsoft.com/en-us/windows/msix/)
+[![Build & Test](https://github.com/rmasabela/CharCounter/actions/workflows/ci.yml/badge.svg)](https://github.com/rmasabela/CharCounter/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)](https://github.com/rmasabela/CharCounter/actions/workflows/ci.yml)
+[![Packaging](https://img.shields.io/badge/Packaging-MSIX%20%28x64%29-orange)](https://github.com/rmasabela/CharCounter/releases)
 [![Privacy: Zero Telemetry](https://img.shields.io/badge/Privacy-100%25%20Offline-success)](PRIVACY.md)
 
 **A fast, lightweight, and privacy-first Windows desktop utility for real-time text analysis and character metrics.**
